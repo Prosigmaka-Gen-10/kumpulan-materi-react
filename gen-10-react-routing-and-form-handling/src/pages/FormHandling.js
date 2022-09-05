@@ -9,6 +9,16 @@ export default function FormHandling () {
 		setNama(eventTerserah.target.value)
 	}
 
+	function handleSubmit () {
+		const payload = {
+			namaSaya: nama,
+			hariIni: hari,
+			gender: gender,
+		}
+
+		console.log(payload)
+	}
+
 	return <>
 		<label>
 			Nama Anda: <br />
@@ -57,6 +67,8 @@ export default function FormHandling () {
 		<br />
 		<br />
 
-		{gender}
+		<button onClick={handleSubmit}>
+			submit
+		</button>
 	</>
 }
