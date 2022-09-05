@@ -1,6 +1,6 @@
 import './App.css';
 
-import KumpulanRoutes from './KumpulanRoutes';
+import { Outlet } from 'react-router-dom'
 
 function App() {
   return (
@@ -9,7 +9,9 @@ function App() {
 
       <hr />
 
-      <KumpulanRoutes />
+      <Outlet />
+
+      <h1>Selamat Tinggal!</h1>
     </div>
   );
 }

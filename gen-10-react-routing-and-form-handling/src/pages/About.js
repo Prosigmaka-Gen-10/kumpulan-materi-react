@@ -1,5 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Routes, Route } from 'react-router-dom'
+
+import Kontak from './About/Kontak'
+import Sejarah from './About/Sejarah'
 
 export default function About () {
 	return <>
