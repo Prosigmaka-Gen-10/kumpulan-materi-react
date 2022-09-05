@@ -1,0 +1,5 @@
+# studi kasus
+- buat toko online
+- ada list produk
+- ada keranjang
+- user bisa memasukkkan produk ke keranjang
