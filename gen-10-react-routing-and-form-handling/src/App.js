@@ -1,9 +1,6 @@
 import './App.css';
 
-import { Routes, Route } from 'react-router-dom'
-
-import Home from './pages/Home';
-import About from './pages/About';
+import KumpulanRoutes from './KumpulanRoutes';
 
 function App() {
   return (
@@ -12,10 +9,7 @@ function App() {
 
       <hr />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
-      </Routes>
+      <KumpulanRoutes />
     </div>
   );
 }
