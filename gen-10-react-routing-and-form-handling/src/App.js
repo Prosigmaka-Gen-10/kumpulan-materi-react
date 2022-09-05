@@ -4,14 +4,12 @@ import { Outlet } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <h1>Selamat Datang!</h1>
 
       <hr />
 
       <Outlet />
-
-      <h1>Selamat Tinggal!</h1>
     </div>
   );
 }
