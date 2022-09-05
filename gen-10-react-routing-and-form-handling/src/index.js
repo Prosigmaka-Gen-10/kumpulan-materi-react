@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import ListProduk from './pages/ListProduk';
 import DetailProduk from './pages/DetailProduk';
+import FormHandling from './pages/FormHandling';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,13 +17,11 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-
           <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
           <Route path="about" element={<About />} />
           <Route path="list-produk" element={<ListProduk />} />
           <Route path="detail-produk/:namaproduk" element={<DetailProduk />} />
-
+          <Route path="form-handling" element={<FormHandling />} />
         </Route>
       </Routes>
     </BrowserRouter>
