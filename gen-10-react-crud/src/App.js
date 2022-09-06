@@ -20,16 +20,34 @@ const productsFromDatabase = [
 ]
 
 function App() {
-  const [products, setProducts] = useState([])
-  const [formInput, setFormInput] = useState({
+  const originalForm = {
     name: '',
     price: ''
-  })
+  }
+
+  const [products, setProducts] = useState([])
+  const [formInput, setFormInput] = useState({...originalForm})
 
   function handleInput (event, propertyName) {
     const currentFormInput = {...formInput}
     currentFormInput[propertyName] = event.target.value
     setFormInput(currentFormInput)
+  }
+
+  function handleSubmit (event) {
+    event.preventDefault()
+
+    const timestampNow = new Date().getTime()
+
+    const payload = {
+      ...formInput,
+      id: timestampNow
+    }
+
+    const currentProducts = [...products]
+    currentProducts.push(payload)
+    setProducts(currentProducts)
+    setFormInput({...originalForm})
   }
 
   useEffect(() => {
@@ -53,15 +71,15 @@ function App() {
 
       <h2>Form Produk:</h2>
 
-      <form>
+      <form onSubmit={(event) => handleSubmit(event)}>
         <label>
           Nama Produk: <br />
           <input
             type="text"
             value={formInput.name}
-            onChange={(event) => handleInput(event, 'name')} />
+            onChange={(event) => handleInput(event, 'name')}
+            required />
         </label>
-        {formInput.name}
 
         <br /><br />
 
@@ -70,9 +88,10 @@ function App() {
           <input
             type="number"
             value={formInput.price}
-            onChange={(event) => handleInput(event, 'price')} />
+            onChange={(event) => handleInput(event, 'price')}
+            required
+            min="500" />
         </label>
-        {formInput.price}
 
         <br /><br />
 
