@@ -21,10 +21,20 @@ const productsFromDatabase = [
 
 function App() {
   const [products, setProducts] = useState([])
+  const [formInput, setFormInput] = useState({
+    name: '',
+    price: ''
+  })
+
+  function handleInput (event, propertyName) {
+    const currentFormInput = {...formInput}
+    currentFormInput[propertyName] = event.target.value
+    setFormInput(currentFormInput)
+  }
 
   useEffect(() => {
     setProducts(productsFromDatabase)
-  })
+  }, [])
 
   return (
     <div className="App">
@@ -37,6 +47,39 @@ function App() {
           </li>
         )}
       </ul>
+
+      <br /><hr /><br />
+      {/* ========== form produk ============= */}
+
+      <h2>Form Produk:</h2>
+
+      <form>
+        <label>
+          Nama Produk: <br />
+          <input
+            type="text"
+            value={formInput.name}
+            onChange={(event) => handleInput(event, 'name')} />
+        </label>
+        {formInput.name}
+
+        <br /><br />
+
+        <label>
+          Harga Produk: <br />
+          <input
+            type="number"
+            value={formInput.price}
+            onChange={(event) => handleInput(event, 'price')} />
+        </label>
+        {formInput.price}
+
+        <br /><br />
+
+        <button>
+          Submit
+        </button>
+      </form>
     </div>
   );
 }
