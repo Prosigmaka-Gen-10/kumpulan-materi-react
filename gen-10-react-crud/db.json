@@ -2,7 +2,7 @@
   "products": [
     {
       "id": 1,
-      "name": "Kapal Api",
+      "name": "Torabika",
       "price": 1000
     },
     {
@@ -14,16 +14,6 @@
       "id": 3,
       "name": "Indomie Rasa Rendang",
       "price": 4000
-    },
-    {
-      "name": "Kitkat",
-      "price": 10000,
-      "id": 4
-    },
-    {
-      "name": "Silver Queen",
-      "price": "15000",
-      "id": 5
     }
   ]
 }

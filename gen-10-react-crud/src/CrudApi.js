@@ -24,7 +24,12 @@ export default function CrudApi () {
 	function handleSubmit (event) {
 		event.preventDefault()
 
-		createProduct()
+		if (formInput.id) { // kalau ada id nya pasti mengupdate
+			updateProduct()
+		}
+		else {
+			createProduct()
+		}
 
 		setFormInput({...originalForm})
 	}
@@ -37,10 +42,30 @@ export default function CrudApi () {
 			})
 	}
 
+	function updateProduct () {
+		axios
+			.put('http://localhost:3004/products/' + formInput.id, formInput)
+			.then(() => {
+				getProductList()
+			})
+	}
+
+	function deleteProduct (productId) {
+		axios
+			.delete('http://localhost:3004/products/' + productId)
+			.then(() => {
+				getProductList()
+			})
+	}
+
 	function handleInput (event, propName) {
 		const currentFormInput = {...formInput}
 		currentFormInput[propName] = event.target.value
 		setFormInput(currentFormInput)
+	}
+
+	function prepareUpdate (product) {
+		setFormInput({...product})
 	}
 
 	useEffect(() => {
@@ -83,6 +108,16 @@ export default function CrudApi () {
 			{products.map(product =>
 				<li key={product.id}>
 					{product.name} | Rp. {product.price}
+
+					&nbsp;&nbsp;
+					<button onClick={() => prepareUpdate(product)}>
+						Update
+					</button>
+
+					&nbsp;&nbsp;
+					<button onClick={() => deleteProduct(product.id)}>
+						Delete
+					</button>
 				</li>
 			)}
 		</ul>
