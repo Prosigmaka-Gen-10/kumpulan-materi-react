@@ -27,6 +27,12 @@ function App() {
 
   const [products, setProducts] = useState([])
   const [formInput, setFormInput] = useState({...originalForm})
+  const [isUpdate, setIsUpdate] = useState(false)
+
+  function prepareUpdate (product) {
+    setFormInput({...product})
+    setIsUpdate(true)
+  }
 
   function handleInput (event, propertyName) {
     const currentFormInput = {...formInput}
@@ -37,6 +43,16 @@ function App() {
   function handleSubmit (event) {
     event.preventDefault()
 
+    if (isUpdate) {
+      updateProduct()
+    } else {
+      createProduct()
+    }
+
+    setFormInput({...originalForm})
+  }
+
+  function createProduct () {
     const timestampNow = new Date().getTime()
 
     const payload = {
@@ -47,7 +63,17 @@ function App() {
     const currentProducts = [...products]
     currentProducts.push(payload)
     setProducts(currentProducts)
-    setFormInput({...originalForm})
+  }
+
+  function updateProduct () {
+    const currentProducts = [...products]
+    const productIndex = currentProducts.findIndex(
+      (product) => product.id === formInput.id
+    )
+
+    currentProducts.splice(productIndex, 1, {...formInput})
+    setProducts(currentProducts)
+    setIsUpdate(false)
   }
 
   useEffect(() => {
@@ -62,6 +88,16 @@ function App() {
         {products.map(product =>
           <li key={product.id}>
             {product.name} | Rp. {product.price}
+            &nbsp;&nbsp;
+
+            <button onClick={() => prepareUpdate(product)}>
+              Update
+            </button>
+            &nbsp;&nbsp;
+
+            <button>
+              Delete
+            </button>
           </li>
         )}
       </ul>
