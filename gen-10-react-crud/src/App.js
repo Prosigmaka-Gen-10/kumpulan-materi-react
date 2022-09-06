@@ -71,9 +71,27 @@ function App() {
       (product) => product.id === formInput.id
     )
 
-    currentProducts.splice(productIndex, 1, {...formInput})
-    setProducts(currentProducts)
+    if (productIndex === -1) {
+      alert('produk tidak ditemukan')
+    }
+    else {
+      const payload = { ...formInput }
+
+      currentProducts.splice(productIndex, 1, payload)
+      setProducts(currentProducts)
+    }
+
     setIsUpdate(false)
+  }
+
+  function handleDelete (productIndex) {
+    const currentProducts = [...products]
+    currentProducts.splice(productIndex, 1)
+    setProducts(currentProducts)
+  }
+
+  function deleteAll () {
+    setProducts([])
   }
 
   useEffect(() => {
@@ -84,8 +102,12 @@ function App() {
     <div className="App">
       <h2>Daftar Produk:</h2>
 
+      <button onClick={deleteAll}>
+        Delete All
+      </button>
+
       <ul>
-        {products.map(product =>
+        {products.map((product, productIndex) =>
           <li key={product.id}>
             {product.name} | Rp. {product.price}
             &nbsp;&nbsp;
@@ -95,7 +117,7 @@ function App() {
             </button>
             &nbsp;&nbsp;
 
-            <button>
+            <button onClick={() => handleDelete(productIndex)}>
               Delete
             </button>
           </li>
