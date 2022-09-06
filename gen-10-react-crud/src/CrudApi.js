@@ -1,6 +1,8 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 
+import Spinner from './Spinner'
+
 export default function CrudApi () {
 	const originalForm = {
 		name: '',
@@ -9,16 +11,23 @@ export default function CrudApi () {
 
 	const [products, setProducts] = useState([])
 	const [formInput, setFormInput] = useState({...originalForm})
+	const [isLoading, setIsLoading] = useState(true)
 
-	function getProductList () {
-		axios
-			.get('http://localhost:3004/products')
-			.then((res) => {
-				// console.log(res.data)
-				setProducts(res.data)
-			})
+	async function getProductList () {
+		try {
+			setIsLoading(true)
+			const response = await axios.get('http://localhost:3004/products')
 
-		// console.log('saya harusnya diakhir jalannya')
+			console.log(response.data)
+			setProducts(response.data)
+
+			console.log('saya harusnya diakhir jalannya')
+		} catch (err) {
+			console.log(err)
+			alert('Terjadi masalah saat memproses data')
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	function handleSubmit (event) {
@@ -35,26 +44,50 @@ export default function CrudApi () {
 	}
 
 	function createProduct () {
+		setIsLoading(true)
 		axios
 			.post('http://localhost:3004/products', formInput)
 			.then(() => {
 				getProductList()
 			})
+			.catch(err => {
+				console.log(err)
+				alert('Ada masalah saat memproses data')
+			})
+			.finally(() => {
+				setIsLoading(false)
+			})
 	}
 
 	function updateProduct () {
+		setIsLoading(true)
 		axios
 			.put('http://localhost:3004/products/' + formInput.id, formInput)
 			.then(() => {
 				getProductList()
 			})
+			.catch(err => {
+				console.log(err)
+				alert('Ada masalah saat memproses data')
+			})
+			.finally(() => {
+				setIsLoading(false)
+			})
 	}
 
 	function deleteProduct (productId) {
+		setIsLoading(true)
 		axios
 			.delete('http://localhost:3004/products/' + productId)
 			.then(() => {
 				getProductList()
+			})
+			.catch(err => {
+				console.log(err)
+				alert('Ada masalah saat memproses data')
+			})
+			.finally(() => {
+				setIsLoading(false)
 			})
 	}
 
@@ -71,6 +104,8 @@ export default function CrudApi () {
 	useEffect(() => {
 		getProductList()
 	}, [])
+
+	if (isLoading) return <Spinner />
 
 	return <>
 		<form onSubmit={event => handleSubmit(event)}>
