@@ -10,6 +10,14 @@ export default function ArticleList () {
 		setArticles(data)
 	}
 
+	async function deleteArticle (articleId) {
+		await fetch('http://localhost:3000/articles/' + articleId, {
+			method: 'DELETE'
+		})
+
+		getArticles()
+	}
+
 	useEffect(() => {
 		getArticles()
 	}, [])
@@ -39,7 +47,7 @@ export default function ArticleList () {
 								<button>Edit</button>
 							</Link>
 							&nbsp;
-							<button>Hapus</button>
+							<button onClick={() => deleteArticle(article.id)}>Hapus</button>
 						</td>
 					</tr>
 				)}
