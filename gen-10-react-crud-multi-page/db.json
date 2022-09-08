@@ -1,0 +1,31 @@
+{
+	"articles": [
+		{
+			"article_id": 1,
+			"article_title": "Presiden Gigit Kuda",
+			"article_content": "Lorem ipsum dolor sir amet. Lorem ipsum dolor sir amet. Lorem ipsum dolor sir amet. Lorem ipsum dolor sir amet. ",
+			"article_publish_date": "2022-09-08"
+		},
+		{
+			"article_id": 2,
+			"article_title": "Presiden Gigit Jari",
+			"article_content": "Lorem ipsum dolor sir amet. Lorem ipsum dolor sir amet. Lorem ipsum dolor sir amet. Lorem ipsum dolor sir amet. ",
+			"article_publish_date": "2022-09-11"
+		}
+	],
+
+	"categories": [
+		{
+			"category_id": 1,
+			"category_name": "Politik"
+		},
+		{
+			"category_id": 2,
+			"category_name": "Agama"
+		},
+		{
+			"category_id": 3,
+			"category_name": "Kemasyarakatan"
+		}
+	]
+}
