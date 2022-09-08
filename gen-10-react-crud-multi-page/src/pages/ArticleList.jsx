@@ -4,15 +4,15 @@ import { Link } from "react-router-dom"
 export default function ArticleList () {
 	const [articles, setArticles] = useState([])
 
-	function getArticles () {
-		fetch('http://localhost:3000/articles')
-			.then(res => res.json())
-			.then(data => {
-				setArticles(data)
-			})
+	async function getArticles () {
+		const res = await fetch('http://localhost:3000/articles')
+		const data = await res.json()
+		setArticles(data)
 	}
 
-	useEffect(getArticles, [])
+	useEffect(() => {
+		getArticles()
+	}, [])
 
 	return <>
 		<h1>Daftar Artikel</h1>
