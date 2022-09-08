@@ -1,8 +1,11 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 export default function ArticleForm () {
 	const navigate = useNavigate()
+	const params = useParams()
+
+	const isEditing = params.articleId
 
 	const [formInput, setFormInput] = useState({
 		article_title: '',
@@ -21,8 +24,14 @@ export default function ArticleForm () {
 
 		const payload = JSON.stringify(formInput)
 
-		await fetch('http://localhost:3000/articles', {
-			method: 'POST',
+		const targetUrl = isEditing
+			? 'http://localhost:3000/articles/' + params.articleId
+			: 'http://localhost:3000/articles'
+
+		const method = isEditing ? 'PUT' : 'POST'
+
+		await fetch(targetUrl, {
+			method: method,
 			body: payload,
 			headers: {
 				'Content-Type': 'application/json'
@@ -31,6 +40,18 @@ export default function ArticleForm () {
 
 		navigate('/articles')
 	}
+
+	async function getArticleDetail () {
+		const res = await fetch('http://localhost:3000/articles/' + params.articleId)
+		const data = await res.json()
+		setFormInput(data)
+	}
+
+	useEffect(() => {
+		if (isEditing) {
+			getArticleDetail()
+		}
+	}, [])
 
 	return <>
 		<h1>Form Artikel</h1>

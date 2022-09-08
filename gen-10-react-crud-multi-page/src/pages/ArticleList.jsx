@@ -35,7 +35,9 @@ export default function ArticleList () {
 						<td>{article.article_title}</td>
 						<td>{article.article_publish_date}</td>
 						<td>
-							<button>Edit</button>
+							<Link to={"/articles/form/" + article.id}>
+								<button>Edit</button>
+							</Link>
 							&nbsp;
 							<button>Hapus</button>
 						</td>
