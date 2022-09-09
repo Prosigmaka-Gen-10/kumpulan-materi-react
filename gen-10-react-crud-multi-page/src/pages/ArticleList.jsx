@@ -3,9 +3,13 @@ import { Link } from "react-router-dom"
 
 export default function ArticleList () {
 	const [articles, setArticles] = useState([])
+	const [searchKeyword, setSearchKeyword] = useState('')
 
 	async function getArticles () {
-		const res = await fetch('http://localhost:3000/articles?_expand=category')
+		const keyword = searchKeyword.length > 0
+			? '&q=' + searchKeyword
+			: ''
+		const res = await fetch('http://localhost:3000/articles?_expand=category' + keyword)
 		const data = await res.json()
 		setArticles(data)
 	}
@@ -20,7 +24,7 @@ export default function ArticleList () {
 
 	useEffect(() => {
 		getArticles()
-	}, [])
+	}, [searchKeyword])
 
 	return <>
 		<h1>Daftar Artikel</h1>
@@ -28,6 +32,16 @@ export default function ArticleList () {
 		<Link to="/articles/form">
 			Buat Artikel
 		</Link>
+
+		<br /><br />
+
+		<input
+			type="text"
+			placeholder="cari artikel"
+			value={searchKeyword}
+			onChange={evt => setSearchKeyword(evt.target.value)} />
+
+		<br /><br />
 
 		<table width="100%" border="1">
 			<thead>

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 
 export default function CategoryList () {
 	const [categories, setCategories] = useState([])
+	const [filteredCategories, setFilteredCategories] = useState([])
+	const [searchKeyword, setSearchKeyword] = useState('')
 
 	async function getCategories () {
 		const res = await axios.get('http://localhost:3000/categories?_embed=articles')
@@ -20,12 +22,36 @@ export default function CategoryList () {
 		getCategories()
 	}, [])
 
+	useEffect(() => {
+		if (searchKeyword.length > 0) {
+			const filterResult = categories.filter((category) => {
+				return category
+					.category_name
+					.toLowerCase()
+					.includes(searchKeyword.toLowerCase())
+			})
+			setFilteredCategories(filterResult)
+		} else {
+			setFilteredCategories(categories)
+		}
+	}, [searchKeyword, categories])
+
 	return <>
 		<h1>Daftar Kategori</h1>
 
 		<Link to="/categories/form">
 			Buat Kategori
 		</Link>
+
+		<br /><br />
+
+		<input
+			type="text"
+			placeholder="cari kategori"
+			value={searchKeyword}
+			onChange={evt => setSearchKeyword(evt.target.value)} />
+
+		<br /><br />
 
 		<table width="100%" border="1">
 			<thead>
@@ -36,7 +62,7 @@ export default function CategoryList () {
 				</tr>
 			</thead>
 			<tbody>
-				{categories.map(category =>
+				{filteredCategories.map(category =>
 					<tr>
 						<td>{category.category_name}</td>
 						<td>{category.articles.length} Artikel</td>
