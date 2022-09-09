@@ -12,7 +12,21 @@
       "article_content": "canda pak",
       "article_publish_date": "2022-09-09",
       "id": 3,
-      "categoryId": 4
+      "categoryId": 2
+    },
+    {
+      "article_title": "Coba artikel pakai kategori",
+      "article_content": "test konten",
+      "article_publish_date": "2022-09-09",
+      "categoryId": 2,
+      "id": 4
+    },
+    {
+      "article_title": "Ramadhan sudah lewat",
+      "article_content": "sampai ketemu tahun depan",
+      "article_publish_date": "2022-09-10",
+      "categoryId": 2,
+      "id": 5
     }
   ],
   "categories": [

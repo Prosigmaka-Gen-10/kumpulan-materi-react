@@ -37,7 +37,9 @@ export default function CategoryForm () {
 	}
 
 	useEffect(() => {
-		getCategoryDetail()
+		if (isEditing) {
+			getCategoryDetail()
+		}
 	}, [])
 
 	return <>

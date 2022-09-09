@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
@@ -7,6 +8,7 @@ export default function ArticleForm () {
 
 	const isEditing = params.articleId
 
+	const [categories, setCategories] = useState([])
 	const [formInput, setFormInput] = useState({
 		article_title: '',
 		article_content: '',
@@ -22,7 +24,10 @@ export default function ArticleForm () {
 	async function handleSubmit (event) {
 		event.preventDefault()
 
-		const payload = JSON.stringify(formInput)
+		const payload = JSON.stringify({
+			...formInput,
+			categoryId: parseInt(formInput.categoryId)
+		})
 
 		const targetUrl = isEditing
 			? 'http://localhost:3000/articles/' + params.articleId
@@ -47,10 +52,17 @@ export default function ArticleForm () {
 		setFormInput(data)
 	}
 
+	async function getCategories () {
+		const res = await axios.get('http://localhost:3000/categories')
+		setCategories(res.data)
+	}
+
 	useEffect(() => {
 		if (isEditing) {
 			getArticleDetail()
 		}
+
+		getCategories()
 	}, [])
 
 	return <>
@@ -69,6 +81,23 @@ export default function ArticleForm () {
 					type="text"
 					value={formInput.article_title}
 					onChange={event => handleInput(event, 'article_title')} />
+			</label>
+
+			<br /><br />
+
+			<label>
+				Kategori <br />
+				<select
+					value={formInput.categoryId}
+					onChange={event => handleInput(event, 'categoryId')}>
+					{categories.map(category =>
+						<option
+							key={category.id}
+							value={category.id}>
+							{category.category_name}
+						</option>
+					)}
+				</select>
 			</label>
 
 			<br /><br />

@@ -6,7 +6,8 @@ export default function CategoryList () {
 	const [categories, setCategories] = useState([])
 
 	async function getCategories () {
-		const res = await axios.get('http://localhost:3000/categories')
+		const res = await axios.get('http://localhost:3000/categories?_embed=articles')
+		console.log(res.data)
 		setCategories(res.data)
 	}
 
@@ -30,6 +31,7 @@ export default function CategoryList () {
 			<thead>
 				<tr>
 					<th>Nama</th>
+					<th>Jumlah Artikel</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -37,6 +39,7 @@ export default function CategoryList () {
 				{categories.map(category =>
 					<tr>
 						<td>{category.category_name}</td>
+						<td>{category.articles.length} Artikel</td>
 						<td>
 							<Link to={'/categories/form/' + category.id}>
 								<button>
