@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { useDebounce } from 'use-debounce'
 
 export default function ArticleList () {
 	const [articles, setArticles] = useState([])
 	const [searchKeyword, setSearchKeyword] = useState('')
+	const [searchKeywordDebounced] = useDebounce(searchKeyword, 500)
 
 	async function getArticles () {
 		const keyword = searchKeyword.length > 0
@@ -24,7 +26,7 @@ export default function ArticleList () {
 
 	useEffect(() => {
 		getArticles()
-	}, [searchKeyword])
+	}, [searchKeywordDebounced])
 
 	return <>
 		<h1>Daftar Artikel</h1>
