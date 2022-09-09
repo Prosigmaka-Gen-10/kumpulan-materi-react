@@ -1,6 +1,24 @@
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 export default function CategoryList () {
+	const [categories, setCategories] = useState([])
+
+	async function getCategories () {
+		const res = await axios.get('http://localhost:3000/categories')
+		setCategories(res.data)
+	}
+
+	async function deleteCategory (categoryId) {
+		await axios.delete('http://localhost:3000/categories/' + categoryId)
+		getCategories()
+	}
+
+	useEffect(() => {
+		getCategories()
+	}, [])
+
 	return <>
 		<h1>Daftar Kategori</h1>
 
@@ -16,22 +34,22 @@ export default function CategoryList () {
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>Kejadian Luar Biasa</td>
-					<td>
-						<button>Edit</button>
-						&nbsp;
-						<button>Hapus</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Politik</td>
-					<td>
-						<button>Edit</button>
-						&nbsp;
-						<button>Hapus</button>
-					</td>
-				</tr>
+				{categories.map(category =>
+					<tr>
+						<td>{category.category_name}</td>
+						<td>
+							<Link to={'/categories/form/' + category.id}>
+								<button>
+									Edit
+								</button>
+							</Link>
+							&nbsp;
+							<button onClick={() => deleteCategory(category.id)}>
+								Hapus
+							</button>
+						</td>
+					</tr>
+				)}
 			</tbody>
 		</table>
 	</>

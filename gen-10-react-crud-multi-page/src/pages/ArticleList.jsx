@@ -5,7 +5,7 @@ export default function ArticleList () {
 	const [articles, setArticles] = useState([])
 
 	async function getArticles () {
-		const res = await fetch('http://localhost:3000/articles')
+		const res = await fetch('http://localhost:3000/articles?_expand=category')
 		const data = await res.json()
 		setArticles(data)
 	}
@@ -33,6 +33,7 @@ export default function ArticleList () {
 			<thead>
 				<tr>
 					<th>Judul</th>
+					<th>Kategori</th>
 					<th>Tanggal Publish</th>
 					<th>Action</th>
 				</tr>
@@ -41,6 +42,7 @@ export default function ArticleList () {
 				{articles.map(article =>
 					<tr>
 						<td>{article.article_title}</td>
+						<td>{article.category.category_name}</td>
 						<td>{article.article_publish_date}</td>
 						<td>
 							<Link to={"/articles/form/" + article.id}>
