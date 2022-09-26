@@ -7,6 +7,7 @@ import BookForm from './pages/BookForm'
 import BookList from './pages/BookList'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
+import ProtectedRoute from './ProtectedRoutes'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -15,12 +16,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />}>
           <Route path="login" element={<Login />} />
 
-          <Route path="dashboard" element={<Dashboard />}>
-
-            <Route path="book-list" element={<BookList />} />
-            <Route path="book-form" element={<BookForm />} />
-
+          <Route path="" element={<ProtectedRoute />}>
+            <Route path="dashboard" element={<Dashboard />}>
+              <Route path="book-list" element={<BookList />} />
+              <Route path="book-form" element={<BookForm />} />
+            </Route>
           </Route>
+
         </Route>
       </Routes>
     </BrowserRouter>

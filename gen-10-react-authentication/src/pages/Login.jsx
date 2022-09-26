@@ -20,14 +20,12 @@ export default function Login () {
 
 		console.log(res.data.data)
 
-		navigate('/dashboard/book-list')
+		authCtx.saveUserData(res.data.data)
+
+		navigate('/dashboard')
 	}
 
 	return <>
-		<h3>Login Form {authCtx.nama} </h3>
-		<button onClick={() => authCtx.setNama('Abid')}>
-			ubah nama
-		</button>
 		<form onSubmit={handleLogin}>
 			<label>
 				Username: <br />
@@ -55,5 +53,13 @@ export default function Login () {
 				Login
 			</button>
 		</form>
+
+		<br /><hr /><br />
+
+		<h3>Data yg udah masuk</h3>
+
+		<p>userId: {authCtx?.userData?.userId}</p>
+		<p>nama: {authCtx?.userData?.name}</p>
+		<p>role: {authCtx?.userData?.roleName}</p>
 	</>
 }
