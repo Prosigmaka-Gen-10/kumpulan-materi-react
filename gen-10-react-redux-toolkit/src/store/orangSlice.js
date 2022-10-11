@@ -12,12 +12,16 @@ const orangSlice = createSlice({
 		},
 		ubahUmur (state, action) {
 			state.umur = action.payload
+		},
+		ubahKeduanya (state, action) {
+			state.nama = action.payload.namaBaru,
+			state.umur = action.payload.umurBaru
 		}
 	}
 })
 
 // export const ubahNama = orangSlice.actions.ubahNama
 // export const ubahUmur = orangSlice.actions.ubahUmur
-export const { ubahNama, ubahUmur } = orangSlice.actions
+export const { ubahNama, ubahUmur, ubahKeduanya } = orangSlice.actions
 
 export default orangSlice.reducer
